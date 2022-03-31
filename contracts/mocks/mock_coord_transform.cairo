@@ -13,12 +13,13 @@ from contracts.coord_transform import (coord_transform)
 
 @external
 func mock_coord_transform {syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr} (
-        momentum_magnitude: felt, face_index: felt
-    ) -> (momentum_vector: felt):
+        momentum_magnitude: felt, face_index: felt, phi : felt 
+    ) -> (momentum_vector: Vec2):
 
     let (result) = coord_transform(
         momentum_magnitude,
-        face_index
+        face_index,
+        phi
     )
     return (result)
 end

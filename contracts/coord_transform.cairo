@@ -20,27 +20,29 @@ from contracts.libs.taylor import (sine_7th)
 
 func coord_transform {syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr} (
         momentum_magnitude : felt, face_index : felt, phi : felt
-    ) -> (momentum_vector : felt):
+    ) -> (momentum_vector : Vec2):
     alloc_locals
+
+    let original_face_index_normal_radians : felt = 0
 
     # get the starting radian value of the given face
     if face_index == 0:
-        let original_face_index_normal_radians = face_index_to_radians.face0
+        assert original_face_index_normal_radians = face_index_to_radians.face0
         jmp next
     end
     if face_index == 1:
-        let original_face_index_normal_radians = face_index_to_radians.face1
+        assert original_face_index_normal_radians = face_index_to_radians.face1
         jmp next
     end
     if face_index == 3:
-        let original_face_index_normal_radians = face_index_to_radians.face3
+        assert original_face_index_normal_radians = face_index_to_radians.face3
         jmp next
     end
     if face_index == 4:
-        let original_face_index_normal_radians = face_index_to_radians.face4
+        assert original_face_index_normal_radians = face_index_to_radians.face4
         jmp next
     else: 
-        return(0)
+        return(Vec2(0,0))
     end
 
     next: 
@@ -50,8 +52,10 @@ func coord_transform {syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_ch
     let cos_value : felt = test_90_degrees - curr_face_index_normal_radians
 
     # turn momentum_magnitude into momentum in the x and y direction
-    let momentum_x : felt = momentum_magnitude * sine_7th(cos_value)
-    let momentum_y : felt = momentum_magnitude * sine_7th(curr_face_index_normal_radians)
+    let sine_result_1 : felt = sine_7th(cos_value)
+    let momentum_x : felt = momentum_magnitude * sine_result_1
+    let sine_result_2 : felt = sine_7th(curr_face_index_normal_radians)
+    let momentum_y : felt = momentum_magnitude * sine_result_2
 
     return (Vec2(momentum_x, momentum_y))
 end
