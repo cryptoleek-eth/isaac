@@ -7,7 +7,7 @@ from starkware.cairo.common.math_cmp import (is_le, is_nn_le)
 from starkware.cairo.common.alloc import alloc
 from starkware.starknet.common.syscalls import (get_block_number, get_caller_address)
 
-from contracts.macro import (forward_world_macro, macro_state, phi_curr)
+from contracts.macro import (forward_world_macro)
 from contracts.design.constants import (ns_device_types, face_index_to_radians, test_90_degrees)
 from contracts.util.structs import (
     MicroEvent, Vec2
@@ -60,7 +60,7 @@ func get_resource_concentration_at_grid (grid : Vec2, resource_type : felt) -> (
     return (1)
 end
 
-func get_resource_harvest_amount_from_concentration (resource_concentration_fp10 : felt, )
+#func get_resource_harvest_amount_from_concentration (resource_concentration_fp10 : felt, )
 
 ##############################
 ## Devices (including opsf)
@@ -811,14 +811,18 @@ func coord_transform {syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_ch
     # get the starting radian value of the given face
     if face_index == 0:
         let original_face_index_normal_radians = face_index_to_radians.face0
-    else if face_index == 1:
+    end
+    if face_index == 1:
         let original_face_index_normal_radians = face_index_to_radians.face1
-    else if face_index == 3:
+    end
+    if face_index == 3:
         let original_face_index_normal_radians = face_index_to_radians.face3
-    else if face_index == 4:
+    end
+    if face_index == 4:
         let original_face_index_normal_radians = face_index_to_radians.face4
-    else 
+    else: 
         return()
+    end
 
     # get the direction the given face is pointing currently in radians
     let curr_face_index_normal_radians: felt = phi + original_face_index_normal_radians
@@ -826,8 +830,8 @@ func coord_transform {syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_ch
     let cos_value = test_90_degrees - curr_face_index_normal_radians
 
     # turn momentum_magnitude into momentum in the x and y direction
-    let (momentum_x : felt) = momentum_magnitude * sine_5th(cos_value)
-    let (momentum_y : felt) = momentum_magnitude * sine_5th(curr_face_index_normal_radians)
+    let (momentum_x : felt) = momentum_magnitude * sine_7th(cos_value)
+    let (momentum_y : felt) = momentum_magnitude * sine_7th(curr_face_index_normal_radians)
 
     return (Vec2(momentum_x, momentum_y))
 end

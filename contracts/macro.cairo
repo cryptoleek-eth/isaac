@@ -12,7 +12,7 @@ from contracts.libs.fpmath import (
     sqrt_fp, mul_fp, div_fp, mul_fp_ul, div_fp_ul, vec2_add2, vec2_add3
 )
 from contracts.libs.dynamicsmath import (
-    dynamics_add, dynamic_add, dynamics_mul_scalar, dynamic_mul_scalar_fp, dynamics_mul_scalar,
+    dynamics_add, dynamic_add, dynamics_mul_scalar_fp, dynamic_mul_scalar_fp, dynamics_mul_scalar,
     dynamic_mul_scalar, dynamics_div_scalar, dynamic_div_scalar
 )
 
