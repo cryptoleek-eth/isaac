@@ -811,19 +811,24 @@ func coord_transform {syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_ch
     # get the starting radian value of the given face
     if face_index == 0:
         let original_face_index_normal_radians = face_index_to_radians.face0
+        jmp next
     end
     if face_index == 1:
         let original_face_index_normal_radians = face_index_to_radians.face1
+        jmp next
     end
     if face_index == 3:
         let original_face_index_normal_radians = face_index_to_radians.face3
+        jmp next
     end
     if face_index == 4:
         let original_face_index_normal_radians = face_index_to_radians.face4
+        jmp next
     else: 
         return()
     end
 
+    next: 
     # get the direction the given face is pointing currently in radians
     let curr_face_index_normal_radians: felt = phi + original_face_index_normal_radians
     
