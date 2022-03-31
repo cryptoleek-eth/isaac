@@ -8,7 +8,7 @@ from starkware.cairo.common.alloc import alloc
 from starkware.starknet.common.syscalls import (get_block_number, get_caller_address)
 
 from contracts.macro import (forward_world_macro, macro_state, phi_curr)
-from contracts.design.constants import (ns_device_types, face_index_to_radians)
+from contracts.design.constants import (ns_device_types, face_index_to_radians, test_90_degrees)
 from contracts.util.structs import (
     MicroEvent, Vec2
 )
@@ -16,6 +16,7 @@ from contracts.util.grid import (
     is_valid_grid, are_contiguous_grids_given_valid_grids,
     is_zero
 )
+from contracts.libs.taylor import (sine_7th)
 
 ##############################
 
@@ -804,11 +805,8 @@ func resource_transfer_across_utb_sets {syscall_ptr : felt*, pedersen_ptr : Hash
 end
 
 func coord_transform {syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr} (
-        momentum_magnitude: felt, face_index: felt
-    ) -> (momentum_vector: felt):
-    
-    # get current phi of planet
-    let (curr_phi: felt) = phi_curr.read() # should this be passed in as params?
+        momentum_magnitude : felt, face_index : felt, phi : felt
+    ) -> (momentum_vector : felt):
 
     # get the starting radian value of the given face
     if face_index == 0:
@@ -823,14 +821,16 @@ func coord_transform {syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_ch
         return()
 
     # get the direction the given face is pointing currently in radians
-    let curr_face_index_normal_radians: felt = curr_phi + original_face_index_normal_radians
+    let curr_face_index_normal_radians: felt = phi + original_face_index_normal_radians
     
+    let cos_value = test_90_degrees - curr_face_index_normal_radians
+
     # turn momentum_magnitude into momentum in the x and y direction
+    let (momentum_x : felt) = momentum_magnitude * sine_5th(cos_value)
+    let (momentum_y : felt) = momentum_magnitude * sine_5th(curr_face_index_normal_radians)
 
-    # get curr_magnitude from server
-
-    # add both magnitudes and return
-
+    return (Vec2(momentum_x, momentum_y))
+end
 
 func forward_world_micro {syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr} (
     ) -> ():

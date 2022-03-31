@@ -13,7 +13,7 @@ from contracts.util.structs import (
 from contracts.micro import (
     device_deploy, device_pickup_by_grid,
     utb_deploy, utb_pickup_by_grid, utb_tether_by_grid,
-    are_resource_producer_consumer_relationship
+    are_resource_producer_consumer_relationship, coord_transform
 )
 
 
@@ -116,3 +116,16 @@ func mock_are_resource_producer_consumer_relationship {range_check_ptr} (
 
     return ()
 end
+
+@external
+func mock_coord_transform {syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr} (
+        momentum_magnitude: felt, face_index: felt
+    ) -> (momentum_vector: felt):
+
+    let (result) = coord_transform(
+        momentum_magnitude,
+        face_index
+    )
+    return (result)
+end
+

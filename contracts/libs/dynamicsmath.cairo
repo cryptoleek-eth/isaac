@@ -1,6 +1,6 @@
 from contracts.design.constants import (
     G, MASS_SUN0, MASS_SUN1, MASS_SUN2, OMEGA_DT_PLANET, TWO_PI,
-    RANGE_CHECK_BOUND, SCALE_FP, SCALE_FP_SQRT, DT
+    RANGE_CHECK_BOUND, SCALE_FP, SCALE_FP_SQRT, DT 
 )
 from contracts.util.structs import (Vec2, Dynamic, Dynamics)
 
@@ -27,7 +27,7 @@ end
 func dynamic_add {} (dynamic0 : Dynamic, dynamic1 : Dynamic) -> (res : Dynamic):
     return (Dynamic (
         q  = Vec2 (dynamic0.q.x + dynamic1.q.x, dynamic0.q.y + dynamic1.q.y),
-        qd = Vec2 (dynamic0.qd.x + dynamic1.qd.x, dynamic0.qd.y + dynamic1.qd.y)
+        qd = Vec2 (dynamic0.qd.x + dynamic1.qd.x, dynamic0.qd.y + dynamic1.qd.y)s
     ))
 end
 

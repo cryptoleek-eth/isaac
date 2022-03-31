@@ -1,4 +1,3 @@
-
 #
 # Constants for numerical precision / stability
 #
@@ -10,13 +9,20 @@ const SCALE_FP_SQRT = 10**10
 # Constants for macro physics simulation
 #
 const DT = 6 / 100 * SCALE_FP  # 0.06 * 10**20
-const OMEGA_DT_PLANET = 624 / 100 * 6 / 100 * SCALE_FP # unit: radiant; takes ~100 DT to complete 2*pi
+const OMEGA_DT_PLANET = 624 / 100 * 6 / 100 * SCALE_FP # unit: radian; takes ~100 DT to complete 2*pi
 const TWO_PI = 6283185 / 1000000 * SCALE_FP
 const G  = 4 * SCALE_FP
 const MASS_SUN0 = 4 * SCALE_FP
 const MASS_SUN1 = 4 * SCALE_FP
 const MASS_SUN2 = 4 * SCALE_FP
-const MASS_PLANET = 0.25 * SCALE_FP
+
+const test_90_degrees = 157079 / 100000 * SCALE_FP
+namespace face_index_to_radians:
+    const face0 = 314159 / 100000 * SCALE_FP
+    const face1 = 471239 / 100000 * SCALE_FP
+    const face3 = 15708 / 10000 * SCALE_FP
+    const face4 = 0 * SCALE_FP
+end
 
 #
 # Constants for planet configuration
