@@ -7,8 +7,8 @@ from starkware.cairo.common.math_cmp import (is_le, is_nn_le)
 from starkware.cairo.common.alloc import alloc
 from starkware.starknet.common.syscalls import (get_block_number, get_caller_address)
 
-from contracts.macro import (forward_world_macro)
-from contracts.design.constants import (ns_device_types)
+from contracts.macro import (forward_world_macro, macro_state, phi_curr)
+from contracts.design.constants import (ns_device_types, face_index_to_radians)
 from contracts.util.structs import (
     MicroEvent, Vec2
 )
@@ -804,8 +804,32 @@ func resource_transfer_across_utb_sets {syscall_ptr : felt*, pedersen_ptr : Hash
 end
 
 func coord_transform {syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr} (
-        momentum_magnitude: felt, face_index: felt, phi: felt
+        momentum_magnitude: felt, face_index: felt
     ) -> (momentum_vector: felt):
+    
+    # get current phi of planet
+    let (curr_phi: felt) = phi_curr.read() # should this be passed in as params?
+
+    # get the starting radian value of the given face
+    if face_index == 0:
+        let original_face_index_normal_radians = face_index_to_radians.face0
+    else if face_index == 1:
+        let original_face_index_normal_radians = face_index_to_radians.face1
+    else if face_index == 3:
+        let original_face_index_normal_radians = face_index_to_radians.face3
+    else if face_index == 4:
+        let original_face_index_normal_radians = face_index_to_radians.face4
+    else 
+        return()
+
+    # get the direction the given face is pointing currently in radians
+    let curr_face_index_normal_radians: felt = curr_phi + original_face_index_normal_radians
+    
+    # turn momentum_magnitude into momentum in the x and y direction
+
+    # get curr_magnitude from server
+
+    # add both magnitudes and return
 
 
 func forward_world_micro {syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr} (

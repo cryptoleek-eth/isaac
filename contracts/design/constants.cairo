@@ -16,6 +16,7 @@ const G  = 4 * SCALE_FP
 const MASS_SUN0 = 4 * SCALE_FP
 const MASS_SUN1 = 4 * SCALE_FP
 const MASS_SUN2 = 4 * SCALE_FP
+const MASS_PLANET = 0.25 * SCALE_FP
 
 #
 # Constants for planet configuration

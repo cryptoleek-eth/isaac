@@ -10,6 +10,7 @@ end
 struct Dynamic:
     member q : Vec2
     member qd : Vec2
+    member mass : felt
 end
 
 struct Dynamics:
