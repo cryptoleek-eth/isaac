@@ -23,4 +23,3 @@ func mock_coord_transform {syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, ran
     )
     return (result)
 end
-

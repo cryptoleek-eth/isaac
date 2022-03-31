@@ -22,8 +22,6 @@ PLANET_DIM = 100
 CONTRACT_FILE = os.path.join(
     os.path.dirname(__file__), "../contracts/mocks/mock_coord_transform.cairo")
 
-print("test: "+os.path.dirname(__file__))
-
 @pytest.mark.asyncio
 async def test_micro ():
     print("test: "+os.path.dirname(__file__))
@@ -42,11 +40,13 @@ async def test_micro ():
     )
 
     #############################
-    # Test `mock_device_deploy()`
+    # Test `mock_coord_transform()`
     #############################
-    print('> Testing mock_device_deploy()')
+    print('> Testing mock_coord_transform()')
+    call_result = await contract.mock_coord_transform(
+        momentum_magnitude=2, face_index=1, phi=0
+    ).invoke()
 
-
-
+    print(call_result)
 
     # LOGGER.info (f'> {i_format}/{TEST_NUM_PER_CASE} | input: grid {grid} on face {face} and edge {edge}, output: {ret.result}')
